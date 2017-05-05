@@ -43,11 +43,18 @@ namespace ThreadDemo
 
             #endregion
 
-            ProcessRrporter p = WriteProcessToConsole;
-            p +=WriteProcessToFile;
-            Utility.Match(p);
-            Console.WriteLine("Done");
-            Console.ReadKey();
+            #region 委托定时器
+            //ProcessRrporter p = WriteProcessToConsole;
+            //p += WriteProcessToFile;
+            //Utility.Match(p);
+            //Console.WriteLine("Done");
+            //Console.ReadKey();
+            #endregion
+
+            Phone6 demoPhone6=new Phone6();
+            demoPhone6.PriceChanged +=Iphone6PriceChanged ;
+            demoPhone6.Price = 99;
+            demoPhone6.Price = 90909;
         }
 
         static void Go()
@@ -57,18 +64,25 @@ namespace ThreadDemo
 
         static void GoWithParam(object msg)
         {
-            Console.WriteLine("Go With Param!Message: "+msg);
+            Console.WriteLine("Go With Param!Message: " + msg);
             Thread.Sleep(1000);
         }
 
         static void WriteProcessToConsole(int percentComplete)
         {
-            Console.WriteLine(percentComplete+"%");
+            Console.WriteLine(percentComplete + "%");
         }
 
         static void WriteProcessToFile(int percentComplete)
         {
             System.IO.File.AppendAllText("process.txt", percentComplete + "%");
+        }
+
+
+        static  void Iphone6PriceChanged(object sender,PriceChangedEventArgs e)
+        {
+            Console.WriteLine("旧价格:{0},新价格:{1}",e.OldPrice,e.NewPrice);
+            Console.ReadLine();
         }
     }
 }
